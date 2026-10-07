@@ -21,6 +21,7 @@ func migrate(db *gorm.DB) error {
 		&model.UserGarden{},
 		&model.Question{},
 		&model.Answer{},
+		&model.PlantMergeTask{},
 	)
 }
 
@@ -87,8 +88,8 @@ func seed(db *gorm.DB) error {
 	}
 
 	questions := []model.Question{
-		{UserID: user.ID, Title: "新买的月季叶子发黄怎么办？", Content: "刚上盆一周，叶片边缘发黄，是不是浇水太多？", Status: "open"},
-		{UserID: user.ID, Title: "多肉徒长了如何补救？", Content: "冬季光照不足，多肉长高了，可以砍头吗？", Status: "open"},
+		{UserID: user.ID, Title: "新买的月季叶子发黄怎么办？", Content: "刚上盆一周，叶片边缘发黄，是不是浇水太多？", Images: "[]", Status: "open"},
+		{UserID: user.ID, Title: "多肉徒长了如何补救？", Content: "冬季光照不足，多肉长高了，可以砍头吗？", Images: "[]", Status: "open"},
 	}
 	if err := db.Create(&questions).Error; err != nil {
 		return err

@@ -67,7 +67,7 @@ gb-61/
 │   ├── cmd/server/              # main.go + migrate/seed
 │   └── internal/
 │       ├── config/              # 环境变量解析
-│       ├── model/               # 9 个实体，按实体分文件
+│       ├── model/               # 10 个实体，按实体分文件
 │       ├── repository/          # 按实体分文件，哨兵错误
 │       ├── service/             # 按实体分文件，构造器注入
 │       ├── handler/             # 按实体分文件 + upload/home
@@ -79,14 +79,14 @@ gb-61/
 └── frontend/
     ├── nginx.conf               # /api 反代 backend + SPA
     └── src/
-        ├── api/                 # user/plant/article/pest/reminder/favorite/garden/question
+        ├── api/                 # user/plant/article/pest/reminder/favorite/garden/question/plantMerge
         ├── stores/              # authStore/userStore/plantStore/articleStore/reminderStore
         ├── components/common/   # PlantCard/CareArticleCard/FavoriteButton/SearchFilter/...
         ├── hooks/               # useAuth/useFavorite/useReminderStats/useQuiz
-        ├── pages/               # Home/PlantLibrary/PlantDetail/ArticleList/.../Login
+        ├── pages/               # Home/PlantLibrary/PlantDetail/.../PlantMerge/Login
         ├── router/              # index.ts + guards.ts
         ├── utils/               # request/dateFormat/season
-        └── constants/           # plant/article/favorite/errorCodes
+        └── constants/           # plant/article/favorite/merge/errorCodes
 ```
 
 ## 环境变量
@@ -130,6 +130,10 @@ gb-61/
 | POST | /api/v1/plants | 管理员（限流） | 新增品种 |
 | PUT | /api/v1/plants/:id | 管理员 | 更新品种 |
 | DELETE | /api/v1/plants/:id | 管理员 | 删除品种 |
+| POST | /api/v1/plants/merge/precheck | 管理员（限流） | 品种合并预检：校验卡片并预估四类关联迁移量 |
+| POST | /api/v1/plants/merge | 管理员（限流） | 提交品种合并（幂等：同批次重复提交返回同一任务） |
+| GET | /api/v1/plants/merge/tasks | 管理员 | 合并任务列表 |
+| GET | /api/v1/plants/merge/tasks/:taskId | 管理员 | 合并任务状态/结果查询（轮询用） |
 | GET | /api/v1/articles | 公开 | 养护文章分页列表/筛选 |
 | GET | /api/v1/articles/:id | 公开 | 文章详情并自增阅读数 |
 | POST | /api/v1/articles | 登录（限流） | 发布文章 |
@@ -161,6 +165,16 @@ gb-61/
 | PUT | /api/v1/answers/:id/like | 登录 | 回答点赞 |
 | POST | /api/v1/uploads | 登录（限流） | 上传图片 |
 
+## 品种合并（管理员）
+
+因别名重复建卡的品种可在「品种合并」页（`/plant-merge`，仅管理员可见）合并：
+
+- 选择**保留卡**与若干**待合并卡**，预检展示四类关联（收藏、我的花园、养护提醒、病虫害）的待迁移量与去重/归并量，确认后执行。
+- 迁移时四类关联全部改挂到保留卡，待合并卡退出品种库。
+- 同一用户同时收藏/养了多张卡时只保留一条（优先保留保留卡上的记录）；养护提醒按「同用户 + 同任务标题」归并，保留最近日期的一条。
+- 每个（阶段 × 待合并卡）迁移单元与其检查点在同一事务提交；迁移失败后可重试，从检查点恢复，只补未完成对象，不会重复迁移。
+- 合并按「保留卡 + 待合并卡集合」幂等：两个窗口同时提交同批合并时先到者生效，后到者拿到同一任务并看到完成结果（执行中可轮询任务状态）。
+
 ## 枚举出现位置清单
 
 ### PlantType（植物类型：flower/foliage/succulent/aquatic）
@@ -177,6 +191,11 @@ gb-61/
 
 - 后端：`backend/internal/constants/favorite.go`（定义）、`backend/internal/model/favorite.go`（模型）、`backend/internal/service/favorite_service.go`（校验）、`backend/internal/constants/log_templates.go`、`database/init.sql`
 - 前端：`frontend/src/constants/favorite.ts`（定义）、`frontend/src/components/common/FavoriteButton.vue`（交互）、`frontend/src/pages/Garden.vue` 与 `frontend/src/pages/Profile.vue`（收藏夹列表）
+
+### MergeTaskStatus（合并任务状态：pending/processing/succeeded/failed）
+
+- 后端：`backend/internal/model/plant_merge_task.go`（定义）、`backend/internal/service/plant_merge_service.go`（状态流转）、`backend/internal/repository/plant_merge_repository.go`（Claim 条件更新）、`backend/internal/constants/messages.go`（状态文案）、`database/init.sql`
+- 前端：`frontend/src/constants/merge.ts`（定义与文案映射）、`frontend/src/pages/PlantMerge.vue`（状态标签与轮询）
 
 ## 横切关注点
 

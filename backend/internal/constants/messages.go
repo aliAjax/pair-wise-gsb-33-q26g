@@ -22,4 +22,8 @@ const (
 	MsgInvalidCredentials   = "用户名或密码错误"
 	MsgUsernameTaken        = "用户名已存在"
 	MsgEmailTaken           = "邮箱已被注册"
+	MsgPlantMergeOK         = "品种合并完成"
+	MsgPlantMergeProcessing = "相同合并任务正在执行中，请稍后查看结果"
+	MsgPlantMergeExists     = "相同合并任务已完成"
+	MsgPlantMergeFailed     = "品种合并失败，可重试从检查点恢复"
 )
