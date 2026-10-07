@@ -15,6 +15,7 @@ const routes: RouteRecordRaw[] = [
   { path: '/questions/:id', name: 'questionDetail', component: () => import('@/pages/QuestionDetail.vue'), meta: { title: '问题详情' } },
   { path: '/quiz', name: 'quiz', component: () => import('@/pages/Quiz.vue'), meta: { title: '养护测验' } },
   { path: '/profile', name: 'profile', component: () => import('@/pages/Profile.vue'), meta: { title: '个人中心', requiresAuth: true } },
+  { path: '/admin/plant-merge', name: 'plantMerge', component: () => import('@/pages/PlantMerge.vue'), meta: { title: '品种合并', requiresAuth: true, requiresAdmin: true } },
   { path: '/login', name: 'login', component: () => import('@/pages/Login.vue'), meta: { title: '登录' } },
 ]
 
@@ -23,12 +24,24 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach((to) => {
+router.beforeEach(async (to) => {
   document.title = `${to.meta.title || ''} - 植物养护知识百科平台`
-  if (to.meta.requiresAuth) {
+  if (to.meta.requiresAuth || to.meta.requiresAdmin) {
     const auth = useAuthStore()
     if (!auth.token) {
       return { path: '/login', query: { redirect: to.fullPath } }
+    }
+    if (to.meta.requiresAdmin) {
+      if (!auth.user) {
+        try {
+          await auth.fetchProfile()
+        } catch {
+          return { path: '/login', query: { redirect: to.fullPath } }
+        }
+      }
+      if (!auth.isAdmin) {
+        return { path: '/' }
+      }
     }
   }
   return true

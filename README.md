@@ -130,6 +130,10 @@ gb-61/
 | POST | /api/v1/plants | 管理员（限流） | 新增品种 |
 | PUT | /api/v1/plants/:id | 管理员 | 更新品种 |
 | DELETE | /api/v1/plants/:id | 管理员 | 删除品种 |
+| POST | /api/v1/plants/merge/precheck | 管理员（限流） | 品种合并预检：统计四类关联及去重/归并影响 |
+| POST | /api/v1/plants/merge | 管理员（限流） | 执行品种合并（幂等：同批重复提交返回已完成结果，失败任务从检查点续跑） |
+| GET | /api/v1/plants/merges | 管理员 | 合并任务列表 |
+| GET | /api/v1/plants/merges/:id | 管理员 | 合并任务状态/结果 |
 | GET | /api/v1/articles | 公开 | 养护文章分页列表/筛选 |
 | GET | /api/v1/articles/:id | 公开 | 文章详情并自增阅读数 |
 | POST | /api/v1/articles | 登录（限流） | 发布文章 |

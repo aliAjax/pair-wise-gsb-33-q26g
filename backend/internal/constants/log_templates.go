@@ -41,9 +41,16 @@ const (
 	LogUploadFailed             = "file upload failed: filename=%s"
 	LogRateLimited              = "request rate limited: path=%s ip=%s"
 	LogRequestHandled           = "request handled: request_id=%s method=%s path=%s status=%d latency_ms=%d"
+	LogPlantMergePrecheck       = "plant merge precheck: keep_id=%d source_count=%d"
+	LogPlantMergeStart          = "plant merge started: task_id=%d keep_id=%d source_id=%d"
+	LogPlantMergeStageDone      = "plant merge stage done: task_id=%d stage=%s"
+	LogPlantMergeFailed         = "plant merge failed: task_id=%d stage=%s"
+	LogPlantMergeSuccess        = "plant merge success: task_id=%d keep_id=%d source_id=%d"
+	LogPlantMergeWait           = "plant merge waiting for concurrent executor: task_id=%d"
+	LogPlantMergeReplay         = "plant merge replayed completed task: task_id=%d"
 )
 
 // LogTemplateCount returns the number of defined log templates (used by tests).
 func LogTemplateCount() int {
-	return 33
+	return 40
 }

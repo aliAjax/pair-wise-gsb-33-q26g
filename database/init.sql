@@ -118,6 +118,26 @@ CREATE TABLE IF NOT EXISTS answers (
   KEY idx_answers_question (question_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- 品种合并任务：唯一 (keep_id, source_id) 保证同批合并并发提交时先到者生效；
+-- stage 为检查点，迁移失败后重试从该阶段继续，只补未完成对象。
+CREATE TABLE IF NOT EXISTS plant_merge_tasks (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  keep_id BIGINT UNSIGNED NOT NULL,
+  source_id BIGINT UNSIGNED NOT NULL,
+  keep_name VARCHAR(128) DEFAULT '',
+  source_name VARCHAR(128) DEFAULT '',
+  status VARCHAR(16) NOT NULL DEFAULT 'pending',
+  stage VARCHAR(32) DEFAULT '',
+  stats JSON,
+  last_error VARCHAR(512) DEFAULT '',
+  operator_id BIGINT UNSIGNED DEFAULT 0,
+  created_at DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3),
+  updated_at DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  finished_at DATETIME(3) NULL,
+  UNIQUE KEY uk_merge_pair (keep_id, source_id),
+  KEY idx_merge_status (status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- 种子数据
 INSERT INTO users (username, email, password_hash, nickname, bio, role) VALUES
   ('admin', 'admin@gbplantwiki.local', '$2a$10$92HNAGfeO3qr7w17GkmGaOaBDxCQ7Q73gbeQ.dGGfgnIuhpPbZH4a', '园艺管理员', '平台内容维护管理员', 'admin'),

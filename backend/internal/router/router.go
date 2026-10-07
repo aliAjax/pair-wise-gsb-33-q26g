@@ -26,6 +26,7 @@ func Setup(cfg *config.Config, db *gorm.DB, logger *slog.Logger) *gin.Engine {
 	gardenRepo := repository.NewUserGardenRepository(db)
 	questionRepo := repository.NewQuestionRepository(db)
 	answerRepo := repository.NewAnswerRepository(db)
+	mergeRepo := repository.NewPlantMergeRepository(db)
 
 	// services
 	userService := service.NewUserService(userRepo, logger, cfg)
@@ -37,6 +38,7 @@ func Setup(cfg *config.Config, db *gorm.DB, logger *slog.Logger) *gin.Engine {
 	gardenService := service.NewUserGardenService(gardenRepo, logger)
 	questionService := service.NewQuestionService(questionRepo, answerRepo, userService, logger)
 	answerService := service.NewAnswerService(db, answerRepo, questionRepo, logger)
+	mergeService := service.NewPlantMergeService(db, mergeRepo, plantRepo, logger)
 
 	// handlers
 	userHandler := handler.NewUserHandler(userService, logger)
@@ -50,6 +52,7 @@ func Setup(cfg *config.Config, db *gorm.DB, logger *slog.Logger) *gin.Engine {
 	answerHandler := handler.NewAnswerHandler(answerService, logger)
 	uploadHandler := handler.NewUploadHandler(cfg, logger)
 	homeHandler := handler.NewHomeHandler(plantService, articleService)
+	mergeHandler := handler.NewPlantMergeHandler(mergeService, logger)
 
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
@@ -66,7 +69,7 @@ func Setup(cfg *config.Config, db *gorm.DB, logger *slog.Logger) *gin.Engine {
 	{
 		v1.GET("/home/overview", homeHandler.Overview)
 		registerUserRoutes(v1, cfg, userHandler, limiter)
-		registerPlantRoutes(v1, cfg, plantHandler, limiter)
+		registerPlantRoutes(v1, cfg, plantHandler, mergeHandler, limiter)
 		registerArticleRoutes(v1, cfg, articleHandler, limiter)
 		registerPestRoutes(v1, cfg, pestHandler, limiter)
 		registerReminderRoutes(v1, cfg, reminderHandler, limiter)

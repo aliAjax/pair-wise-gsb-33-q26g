@@ -11,6 +11,7 @@
         <el-menu-item index="/garden">我的花园</el-menu-item>
         <el-menu-item index="/questions">问答社区</el-menu-item>
         <el-menu-item index="/quiz">养护测验</el-menu-item>
+        <el-menu-item v-if="auth.isAdmin" index="/admin/plant-merge">品种合并</el-menu-item>
       </el-menu>
       <div class="user-area">
         <template v-if="auth.token">
@@ -34,11 +35,19 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/authStore'
 
 const auth = useAuthStore()
 const router = useRouter()
+
+// Restore the profile after a page refresh so role-based menus render.
+onMounted(() => {
+  if (auth.token && !auth.user) {
+    auth.fetchProfile()
+  }
+})
 
 function onCommand(cmd: string) {
   if (cmd === 'profile') {
