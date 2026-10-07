@@ -1,0 +1,25 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e5] [cursor=pointer]: 🌿 植物养护百科
+    - menubar [ref=e6]:
+      - menuitem "首页" [ref=e7] [cursor=pointer]
+      - menuitem "品种库" [ref=e8] [cursor=pointer]
+      - menuitem "养护文章" [ref=e9] [cursor=pointer]
+      - menuitem "病虫害手册" [ref=e10] [cursor=pointer]
+      - menuitem "季节日历" [ref=e11] [cursor=pointer]
+      - menuitem "我的花园" [ref=e12] [cursor=pointer]
+      - menuitem "问答社区" [ref=e13] [cursor=pointer]
+      - menuitem "养护测验" [ref=e14] [cursor=pointer]
+    - button "登录/注册" [ref=e16] [cursor=pointer]
+  - main [ref=e18]:
+    - generic [ref=e21]:
+      - heading "登录" [level=2] [ref=e22]
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - generic [ref=e25]: 用户名
+          - textbox "用户名" [ref=e29]
+        - generic [ref=e30]:
+          - generic [ref=e31]: 密码
+          - textbox "密码" [ref=e35]
+        - button "登录" [ref=e38] [cursor=pointer]
+      - button "没有账号？去注册" [ref=e40] [cursor=pointer]

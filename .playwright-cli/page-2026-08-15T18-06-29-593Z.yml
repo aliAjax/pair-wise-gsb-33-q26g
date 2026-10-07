@@ -1,0 +1,98 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5] [cursor=pointer]: 🌿 植物养护百科
+      - menubar [ref=e6]:
+        - menuitem "首页" [ref=e7] [cursor=pointer]
+        - menuitem "品种库" [ref=e8] [cursor=pointer]
+        - menuitem "养护文章" [ref=e9] [cursor=pointer]
+        - menuitem "病虫害手册" [ref=e10] [cursor=pointer]
+        - menuitem "季节日历" [ref=e11] [cursor=pointer]
+        - menuitem "我的花园" [ref=e12] [cursor=pointer]
+        - menuitem "问答社区" [ref=e13] [cursor=pointer]
+        - menuitem "养护测验" [ref=e14] [cursor=pointer]
+      - button "冒烟用户" [ref=e43] [cursor=pointer]
+    - main [ref=e18]:
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - heading "植物养护知识百科平台" [level=1] [ref=e46]
+          - paragraph [ref=e47]: 品种库 · 养护文章 · 病虫害防治 · 季节日历 · 问答社区
+          - generic [ref=e48]:
+            - textbox "搜索植物品种 / 养护文章 / 病虫害" [ref=e50]
+            - button "搜索" [ref=e52] [cursor=pointer]
+        - alert [ref=e55]:
+          - generic [ref=e59]: 当季养护重点：夏季遮阴：增加浇水频率，防晒通风
+        - generic [ref=e61]:
+          - heading "🔥 热门品种" [level=2] [ref=e62]
+          - generic [ref=e63]:
+            - generic [ref=e66] [cursor=pointer]:
+              - generic [ref=e67]: 🌿
+              - generic [ref=e69]:
+                - generic [ref=e70]:
+                  - text: 冒烟测试植物X
+                  - generic [ref=e71]: 观叶
+                - generic [ref=e73]: 测试科 · 测试属
+                - generic [ref=e74]: 温度不限
+            - generic [ref=e80] [cursor=pointer]:
+              - generic [ref=e81]:
+                - text: 清香木
+                - generic [ref=e82]: 观叶
+              - generic [ref=e84]: 柏科 · 圆柏属
+              - generic [ref=e85]: 8°C ~ 30°C
+            - generic [ref=e88] [cursor=pointer]:
+              - generic [ref=e89]: 🌿
+              - generic [ref=e91]:
+                - generic [ref=e92]:
+                  - text: 库拉索芦荟
+                  - generic [ref=e93]: 多肉
+                - generic [ref=e95]: 百合科 · 芦荟属
+                - generic [ref=e96]: 10°C ~ 32°C
+            - generic [ref=e102] [cursor=pointer]:
+              - generic [ref=e103]:
+                - text: 月季
+                - generic [ref=e104]: 观花
+              - generic [ref=e106]: 蔷薇科 · 月季属
+              - generic [ref=e107]: 5°C ~ 30°C
+            - generic [ref=e113] [cursor=pointer]:
+              - generic [ref=e114]:
+                - text: 碗莲
+                - generic [ref=e115]: 水生
+              - generic [ref=e117]: 睡莲科 · 睡莲属
+              - generic [ref=e118]: 15°C ~ 35°C
+            - generic [ref=e124] [cursor=pointer]:
+              - generic [ref=e125]:
+                - text: 多肉吉娃娃
+                - generic [ref=e126]: 多肉
+              - generic [ref=e128]: 景天科 · 拟石莲属
+              - generic [ref=e129]: 10°C ~ 28°C
+            - generic [ref=e135] [cursor=pointer]:
+              - generic [ref=e136]:
+                - text: 龟背竹
+                - generic [ref=e137]: 观叶
+              - generic [ref=e139]: 天南星科 · 龟背竹属
+              - generic [ref=e140]: 18°C ~ 30°C
+        - generic [ref=e141]:
+          - heading "📖 最新养护文章" [level=2] [ref=e142]
+          - generic [ref=e143]:
+            - generic [ref=e149] [cursor=pointer]:
+              - generic [ref=e150]: 繁殖
+              - generic [ref=e152]: 龟背竹扦插繁殖实操
+              - generic [ref=e153]: 2026-08-16 · 阅读 68
+            - generic [ref=e159] [cursor=pointer]:
+              - generic [ref=e160]: 病虫害
+              - generic [ref=e162]: 常见介壳虫的识别与防治
+              - generic [ref=e163]: 2026-08-16 · 阅读 154
+            - generic [ref=e169] [cursor=pointer]:
+              - generic [ref=e170]: 修剪
+              - generic [ref=e172]: 月季夏季修剪与控旺
+              - generic [ref=e173]: 2026-08-16 · 阅读 210
+            - generic [ref=e179] [cursor=pointer]:
+              - generic [ref=e180]: 施肥
+              - generic [ref=e182]: 多肉植物施肥要点：薄肥勤施
+              - generic [ref=e183]: 2026-08-16 · 阅读 96
+            - generic [ref=e189] [cursor=pointer]:
+              - generic [ref=e190]: 换盆
+              - generic [ref=e192]: 春季换盆全攻略：时机、方法与注意事项
+              - generic [ref=e193]: 2026-08-16 · 阅读 128
+  - alert [ref=e194]:
+    - paragraph [ref=e198]: 登录成功

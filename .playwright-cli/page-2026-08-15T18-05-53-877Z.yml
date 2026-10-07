@@ -1,0 +1,40 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e5] [cursor=pointer]: 🌿 植物养护百科
+    - menubar [ref=e6]:
+      - menuitem "首页" [ref=e7] [cursor=pointer]
+      - menuitem "品种库" [ref=e8] [cursor=pointer]
+      - menuitem "养护文章" [ref=e9] [cursor=pointer]
+      - menuitem "病虫害手册" [ref=e10] [cursor=pointer]
+      - menuitem "季节日历" [ref=e11] [cursor=pointer]
+      - menuitem "我的花园" [ref=e12] [cursor=pointer]
+      - menuitem "问答社区" [ref=e13] [cursor=pointer]
+      - menuitem "养护测验" [ref=e14] [cursor=pointer]
+    - button "登录/注册" [ref=e16] [cursor=pointer]
+  - main [ref=e18]:
+    - generic [ref=e19]:
+      - heading "问答互动社区" [level=1] [ref=e20]
+      - generic [ref=e22]:
+        - textbox "问题标题" [ref=e25]
+        - textbox "详细描述你的养护问题" [ref=e27]
+        - button "发布问题" [ref=e28] [cursor=pointer]
+      - generic [ref=e31]:
+        - generic [ref=e32] [cursor=pointer]: 冒烟测试问题
+        - generic [ref=e33]: 冒烟问题内容
+        - generic [ref=e34]: 2026-08-16 01:57 · 已结题
+        - button "查看 / 回答" [ref=e35] [cursor=pointer]
+      - generic [ref=e38]:
+        - generic [ref=e39] [cursor=pointer]: 多肉徒长了如何补救？
+        - generic [ref=e40]: 冬季光照不足，多肉长高了，可以砍头吗？
+        - generic [ref=e41]: 2026-08-16 09:55 · 待解答
+        - button "查看 / 回答" [ref=e42] [cursor=pointer]
+      - generic [ref=e45]:
+        - generic [ref=e46] [cursor=pointer]: 新买的月季叶子发黄怎么办？
+        - generic [ref=e47]: 刚上盆一周，叶片边缘发黄，是不是浇水太多？
+        - generic [ref=e48]: 2026-08-16 09:55 · 待解答
+        - button "查看 / 回答" [ref=e49] [cursor=pointer]
+      - generic [ref=e51]:
+        - button "上一页" [disabled] [ref=e52]
+        - list [ref=e53]:
+          - listitem "第 1 页" [ref=e54]: "1"
+        - button "下一页" [disabled] [ref=e55]

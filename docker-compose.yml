@@ -1,0 +1,68 @@
+name: gbplantwiki
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: ${COMPOSE_PROJECT_NAME:-gbplantwiki}_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME:-gbplantwiki_db}
+      MYSQL_USER: ${DB_USER:-gbplantwiki_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-gbplantwiki_pwd}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-gbplantwiki_root}
+      TZ: Asia/Shanghai
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "${DB_PORT:-3502}:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  backend:
+    build:
+      context: ./backend
+    container_name: ${COMPOSE_PROJECT_NAME:-gbplantwiki}_backend
+    restart: unless-stopped
+    environment:
+      SERVER_PORT: "8080"
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_USER: ${DB_USER:-gbplantwiki_user}
+      DB_PASSWORD: ${DB_PASSWORD:-gbplantwiki_pwd}
+      DB_NAME: ${DB_NAME:-gbplantwiki_db}
+      JWT_SECRET: ${JWT_SECRET:-change_me_to_a_long_random_string}
+      UPLOAD_DIR: /app/uploads
+    ports:
+      - "${BACKEND_PORT:-3102}:8080"
+    volumes:
+      - uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/healthz >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: ${COMPOSE_PROJECT_NAME:-gbplantwiki}_frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-8102}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  db_data:
+  uploads:
